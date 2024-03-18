@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from "react";
-
+import "../stylesheets/Timer.css";
 interface TimerPropsI {
 	run: boolean;
 	workBreak: number;
 }
 
+/*Converts number of seconds to minutes and seconds string => 61 seconds to 1:01*/
 function timerFormate(seconds: number): string {
 	let minute: number = (seconds - (seconds % 60)) / 60;
 	let second: number = seconds % 60;
@@ -54,43 +55,46 @@ export function Timer({ run, workBreak }: TimerPropsI) {
 	}, [workBreak]);
 
 	return (
-		<div className="startTime">
-			<h1>{timerFormate(timer)}</h1>
-			<button
-				onClick={() => {
-					//setRun(false);
-					setEndTime(endTime + 60000);
-					setTimer(timer + 60);
-					//setRun(true);
-				}}
-			>
-				+
-			</button>
-			<button
-				onClick={() => {
-					//setRun(false);
-					//current time timestamp
-					let timestamp = new Date().getTime();
-					setStartTime(timestamp);
-					console.log(workBreak, timer);
-					//set to 25 mins in the future
-					setEndTime(timestamp + workBreak * 1000);
-					setTimer(workBreak);
-					//setRun(true);
-				}}
-			>
-				Reset
-			</button>
-			<button
-				onClick={() => {
-					if (timer > 0) {
-						setEndTime(endTime - 60000);
-						setTimer(timer - 60);
-					}
-				}}
-			>
-				-
-			</button>
+		<div className="div--timer">
+			<div className="div--time">{timerFormate(timer)}</div>
+			<div className="div--button-wrapper">
+				<button
+					className="button--small"
+					onClick={() => {
+						//setRun(false);
+						setEndTime(endTime + 60000);
+						setTimer(timer + 60);
+						//setRun(true);
+					}}
+				>
+					+
+				</button>
+				<button
+					className="button--small"
+					onClick={() => {
+						//current time timestamp
+						let timestamp = new Date().getTime();
+						setStartTime(timestamp);
+						console.log(workBreak, timer);
+						//set to 25 mins in the future
+						setEndTime(timestamp + workBreak * 1000);
+						setTimer(workBreak);
+					}}
+				>
+					Reset
+				</button>
+				<button
+					className="button--small"
+					onClick={() => {
+						if (timer > 0) {
+							setEndTime(endTime - 60000);
+							setTimer(timer - 60);
+						}
+					}}
+				>
+					-
+				</button>
+			</div>
 		</div>
 	);
 }

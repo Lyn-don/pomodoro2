@@ -1,6 +1,8 @@
-.model {
+.div--pomodoro-wrapper {
 	display: flex;
-	background: white;
-	height: fit-content;
-	width: fit-content;
+	align-items: center;
+	justify-content: center;
+
+	width: 30em;
+	height: 30em;
 }
