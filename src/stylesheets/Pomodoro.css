@@ -1,8 +1,9 @@
 .div--pomodoro-wrapper {
+	margin-top: 5em;
+	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-
 	width: 30em;
 	height: 30em;
 }

@@ -8,6 +8,7 @@ body {
 	font-weight: 800;
 	font-style: normal;
 	color: rgba(255, 255, 255, 0.7);
+	user-select: none;
 }
 
 button {
@@ -20,10 +21,11 @@ button {
 	margin: 2em 0 2em 0;
 	font-size: large;
 	font-weight: 800;
+	cursor: pointer;
 }
 
 button:hover {
-	-webkit-backdrop-filter: blur(2px);
+	-webkit-backdrop-filter: blur(100px);
 }
 
 .button--small {
@@ -35,4 +37,8 @@ button:hover {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+}
+
+.div--cube {
+	background-color: blue;
 }

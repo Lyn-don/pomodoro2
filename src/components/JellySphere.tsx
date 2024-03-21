@@ -1,15 +1,22 @@
-//import { ThreeElements } from "@react-three/fiber";
-import { MeshDistortMaterial, Sphere } from "@react-three/drei";
-import { useEffect, useState } from "react";
+import { useFrame } from "@react-three/fiber";
+import React, { useState, useRef, useEffect } from "react";
 
-export function JellySphere() {
+export function JellySphere(props: any) {
+	const ref = useRef();
+	if (ref.current !== undefined) {
+		useFrame((state, delta) => {
+			console.log(delta);
+			ref.current.rotation.x += delta;
+		});
+	}
+
 	return (
-		<Sphere visible args={[1, 100, 200]} scale={2}>
-			<MeshDistortMaterial
-				distort={0.5}
-				speed={1}
-				color="rgb(100, 300, 200)"
+		<mesh {...props} ref={ref} scale={1}>
+			<sphereGeometry args={[2, 50, 50]} />
+			<meshStandardMaterial
+				wireframe={props.wireframe}
+				color={props.color}
 			/>
-		</Sphere>
+		</mesh>
 	);
 }
