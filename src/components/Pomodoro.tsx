@@ -70,27 +70,32 @@ export function Pomodoro() {
 		<div className="div--pomodoro">
 			<div className="div--top-controls">
 				<button
-					onClick={() => {
+					onClick={(e) => {
+						if (run) e.currentTarget.innerText = "▶";
+						else e.currentTarget.innerText = "||";
 						setRun(!run);
 					}}
 				>
-					PLAY/PAUSE
+					▶
 				</button>
 				<button
-					onClick={() => {
+					onClick={(e) => {
 						if (workBreak > 300) {
+							e.currentTarget.innerText = "BREAK";
 							setWorkBreak(300);
 						} else {
+							e.currentTarget.innerText = "WORK";
 							setWorkBreak(1500);
 						}
 					}}
 				>
-					WORK/BREAK
+					WORK
 				</button>
 			</div>
 
 			<div className="div--bottom-controls">
 				<button
+					className="button--small"
 					onClick={() => {
 						setEndTime(endTime + 60000);
 						setTimer(timer + 60);
@@ -112,6 +117,7 @@ export function Pomodoro() {
 					RESET
 				</button>
 				<button
+					className="button--small"
 					onClick={() => {
 						if (timer > 0) {
 							setEndTime(endTime - 60000);

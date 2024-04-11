@@ -1,6 +1,6 @@
 import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
 import { MeshDistortMaterial, OrbitControls, Text3D } from "@react-three/drei";
-import { Canvas, useLoader } from "@react-three/fiber";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import {
 	Instances,
 	Instance,
@@ -13,27 +13,27 @@ import { Suspense, useEffect, useState } from "react";
 import "../stylesheets/Timer.css";
 import { Physics, RigidBody } from "@react-three/rapier";
 export function Timer({ props }: any) {
-	const [timer, setTimer] = useState<Array<string>>([""]);
-	/*const texture = useLoader(
-		RGBELoader,
-		"https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/aerodynamics_workshop_1k.hdr"
-	);*/
+	const [timer, setTimer] = useState<Array<string>>([]);
 	useEffect(() => {
 		setTimer(props.timer.split(""));
-	}, [props]);
+
+		if (timer) {
+			document.title = "🍅 " + props.timer + " Pomodoro 🍅";
+		}
+	}, [props.timer]);
 
 	return (
 		<Canvas
 			shadows
 			orthographic
-			camera={{ position: [-10, 25, 20], zoom: 70 }}
+			camera={{ position: [-10, 25, 20], zoom: 40 }}
 			gl={{ preserveDrawingBuffer: true }}
 		>
 			<Suspense>
 				<Physics>
 					<OrbitControls
-						maxZoom={70}
-						minZoom={50}
+						maxZoom={40}
+						minZoom={30}
 						zoomSpeed={0.5}
 						enablePan={false}
 						dampingFactor={0.05}
@@ -41,16 +41,18 @@ export function Timer({ props }: any) {
 						maxPolarAngle={Math.PI / 4}
 					/>
 					<Center>
-						{/*timer.map((char, key) => {
-							return (
-								<Text key={key} props={{ key: key }}>
-									{char}
-								</Text>
-							);
-						})*/}
-						<Text>{timer}</Text>
+						<Text props={{ position: [0, -6.7, -24] }}>
+							{timer}
+						</Text>
+						<Text props={{ position: [0, -6.7, -16] }}>
+							{timer}
+						</Text>
+						<Text props={{ position: [0, -6.7, -8] }}>{timer}</Text>
+						<Text props={{ position: [0, -6.7, 0] }}>{timer}</Text>
+						<Text props={{ position: [0, -6.7, 8] }}>{timer}</Text>
+						<Text props={{ position: [0, -6.7, 16] }}>{timer}</Text>
+						<Text props={{ position: [0, -6.7, 24] }}>{timer}</Text>
 					</Center>
-
 					<Grid />
 				</Physics>
 			</Suspense>
@@ -58,20 +60,20 @@ export function Timer({ props }: any) {
 			<Environment resolution={32}>
 				<group rotation={[-Math.PI / 4, -0.3, 0]}>
 					<Lightformer
-						intensity={2}
+						intensity={5}
 						rotation-y={Math.PI / 2}
 						position={[-5, -1, -1]}
 						scale={[10, 2, 1]}
 					/>
 					<Lightformer
-						intensity={2}
+						intensity={10}
 						rotation-y={-Math.PI / 2}
 						position={[10, 1, 0]}
 						scale={[20, 2, 1]}
 					/>
 					<Lightformer
 						type="ring"
-						intensity={2}
+						intensity={5}
 						rotation-y={Math.PI / 2}
 						position={[-0.1, -1, -5]}
 						scale={10}
@@ -82,26 +84,9 @@ export function Timer({ props }: any) {
 	);
 }
 
-function Floor() {
-	const texture = useLoader(RGBELoader, "/src/media/test_bg.hdr");
-	return (
-		<RigidBody
-			type="fixed"
-			position={[0, -5, 0]}
-			friction={0}
-			scale={1}
-			rotation={[-Math.PI / 2, 0, 0]}
-		>
-			<mesh castShadow>
-				<planeGeometry args={[100, 100]} />
-				<MeshDistortMaterial />
-			</mesh>
-		</RigidBody>
-	);
-}
-
 const Grid = ({ number = 30, lineWidth = 0.1, height = 0.5 }) => (
 	// Renders a grid and crosses as instances
+
 	<Instances position={[0, -1.02, 0]}>
 		<planeGeometry args={[lineWidth, height]} />
 		<meshBasicMaterial color="#CFFF04" />
@@ -127,44 +112,46 @@ const Grid = ({ number = 30, lineWidth = 0.1, height = 0.5 }) => (
 	</Instances>
 );
 
-function Text({ children }: any) {
-	const texture = useLoader(RGBELoader, "/src/media/jelly.hdr");
-	const [color, setColor] = useState("red");
+function Text({ children, props }: any) {
+	const [color, setColor] = useState([250, 50, 50]);
+
+	//const texture = useLoader(RGBELoader, "/src/media/jelly.hdr");
+
 	return (
 		<Text3D
-			onPointerOver={() => {
-				setColor("blue");
+			onClick={() => {
+				if (color[0] == 250) {
+					setColor([150, 200, 0]);
+				} else {
+					setColor([250, 50, 50]);
+				}
 			}}
-			onPointerOut={() => {
-				setColor("red");
-			}}
-			castShadow={true}
+			castShadow={false}
 			bevelEnabled={true}
 			bevelThickness={0.1}
-			bevelSize={0.05}
-			bevelSegments={30}
-			scale={4}
+			bevelSize={0.08}
+			bevelSegments={8}
+			scale={5}
 			letterSpacing={0.3}
-			height={0.3}
-			curveSegments={50}
+			height={0.5}
+			curveSegments={15}
 			rotation={[-Math.PI / 2, 0, 0]}
-			position={[0, -7.5, 0]}
-			font={"/src/media/Titillium Web_Regular(1).json"}
+			position={props.position}
+			font={"/src/media/Titillium Web_Regular.json"}
 		>
 			{children}
 			<MeshTransmissionMaterial
 				reflectivity={0.5}
-				transmission={1}
+				transmission={1.5}
 				thickness={0.5}
 				temporalDistortion={0.3}
-				distortionScale={0.3}
+				distortionScale={0.5}
 				backsideThickness={1}
 				clearcoat={0.1}
-				clearcoatRoughness={1}
+				clearcoatRoughness={0.3}
 				backside={true}
-				chromaticAberration={0.5}
-				background={texture}
-				color={color}
+				chromaticAberration={0.2}
+				color={`rgb(${color[0]},${color[1]},${color[2]})`}
 			/>
 		</Text3D>
 	);

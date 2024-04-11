@@ -6,17 +6,18 @@
 	height: 100vh;
 	width: 100vw;
 	z-index: 10;
-	pointer-events: all;
 }
 
 .div--top-controls {
-	-webkit-backdrop-filter: blur(5px);
-	backdrop-filter: blur(5px);
+	display: flex;
+	justify-content: space-between;
+	pointer-events: none;
 	width: 100vw;
 }
 
 .div--bottom-controls {
-	-webkit-backdrop-filter: blur(5px);
-	backdrop-filter: blur(5px);
+	display: flex;
+	justify-content: space-between;
+	pointer-events: none;
 	width: 100vw;
 }

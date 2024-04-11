@@ -6,6 +6,7 @@ body {
 * {
 	font-family: "M PLUS Rounded 1c", sans-serif;
 	font-weight: 800;
+
 	font-style: normal;
 	color: rgba(255, 255, 255, 0.7);
 	user-select: none;
@@ -15,17 +16,31 @@ button {
 	background: none;
 	-webkit-backdrop-filter: blur(5px);
 	backdrop-filter: blur(5px);
-	width: 12em;
-	height: 4em;
-	border: rgb(0, 0, 0) double 3px;
+
+	min-width: 15em;
+	max-width: 15em;
+
+	min-height: 6em;
+	max-height: 6em;
+
+	border: rgb(150, 200, 0) double 6px;
 	font-size: large;
 	font-weight: 800;
 	cursor: pointer;
+	pointer-events: auto;
+	border-radius: 3em;
+	margin: 5em;
+}
+
+.button--small {
+	min-width: 6em;
+	max-width: 6em;
 }
 
 button:hover {
 	-webkit-backdrop-filter: blur(10px);
 	backdrop-filter: blur(10px);
+	color: rgba(255, 255, 255, 0.9);
 }
 
 .button--small {

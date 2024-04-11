@@ -38,7 +38,7 @@ struct Task{
 fn play_alarm(){
 // Get a output stream handle to the default physical sound device
 let (_stream, stream_handle) = OutputStream::try_default().unwrap();
-let file = BufReader::new(File::open("./src/alarm.wav").unwrap());
+let file = BufReader::new(File::open("./media/alarm.wav").unwrap());
 let source = Decoder::new(file).unwrap();
 stream_handle.play_raw(source.convert_samples()).unwrap();
 std::thread::sleep(std::time::Duration::from_secs(5));
