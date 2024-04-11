@@ -1,0 +1,40 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
+* {
+	font-family: "M PLUS Rounded 1c", sans-serif;
+	font-weight: 800;
+	font-style: normal;
+	color: rgba(255, 255, 255, 0.7);
+	user-select: none;
+}
+
+button {
+	background: none;
+	-webkit-backdrop-filter: blur(5px);
+	backdrop-filter: blur(5px);
+	width: 12em;
+	height: 4em;
+	border: rgb(0, 0, 0) double 3px;
+	font-size: large;
+	font-weight: 800;
+	cursor: pointer;
+}
+
+button:hover {
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
+}
+
+.button--small {
+	width: 6em;
+}
+
+.div--button-wrapper {
+	width: 30em;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
