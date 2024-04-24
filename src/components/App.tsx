@@ -8,6 +8,7 @@ function App() {
 	useEffect(() => {
 		//create a db to hold the persistent data if it doesn't exist on mount
 		createDb("user_data");
+		console.log("fart");
 	}, []);
 
 	return (

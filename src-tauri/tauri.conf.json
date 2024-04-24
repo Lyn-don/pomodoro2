@@ -12,7 +12,7 @@
 	},
 	"tauri": {
 		"allowlist": {
-			"all": false,
+			"all": true,
 			"shell": {
 				"all": false,
 				"open": true
@@ -38,8 +38,8 @@
 				"fullscreen": false,
 				"resizable": true,
 				"title": "pomodoro2",
-				"width": 700,
-				"height": 600
+				"width": 1200,
+				"height": 1000
 			}
 		]
 	}
