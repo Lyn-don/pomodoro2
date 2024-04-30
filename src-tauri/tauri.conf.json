@@ -12,13 +12,14 @@
 	},
 	"tauri": {
 		"allowlist": {
-			"all": true,
+			"all": false,
 			"shell": {
 				"all": false,
 				"open": true
 			}
 		},
 		"bundle": {
+			"resources": ["media/", "../src/media/"],
 			"active": true,
 			"targets": "all",
 			"identifier": "pomodore2-timer",

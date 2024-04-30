@@ -5,7 +5,7 @@ import { invoke } from "@tauri-apps/api/tauri";
  * @param db
  */
 async function createDb(db: string) {
-  await invoke("create_db", { db: db });
+	await invoke("create_db", { db: db });
 }
 
 /**
@@ -14,7 +14,7 @@ async function createDb(db: string) {
  * @param table
  */
 async function createTable(db: string, table: string) {
-  await invoke("create_table");
+	await invoke("create_table");
 }
 
 /**
@@ -23,7 +23,7 @@ async function createTable(db: string, table: string) {
  * @param query
  */
 async function insertRow(db: string, query: string) {
-  await invoke("insert_row", { db: db, query: query });
+	await invoke("insert_row", { db: db, query: query });
 }
 
 /**
@@ -33,7 +33,7 @@ async function insertRow(db: string, query: string) {
  * @param {number} id
  */
 async function deleteRow(db: string, table: string, id: number) {
-  await invoke("delete_row", { db: db, table: table, id: id });
+	await invoke("delete_row", { db: db, table: table, id: id });
 }
 
 /**
@@ -41,10 +41,10 @@ async function deleteRow(db: string, table: string, id: number) {
  * @returns {Promise<object[]>}
  */
 async function getTask(): Promise<object[]> {
-  let tasks: object[] = await invoke("get_tasks").then((res: any) =>
-    JSON.parse(res)
-  );
-  return tasks;
+	let tasks: object[] = await invoke("get_tasks").then((res: any) =>
+		JSON.parse(res)
+	);
+	return tasks;
 }
 
 export { createDb, createTable, insertRow, deleteRow, getTask };

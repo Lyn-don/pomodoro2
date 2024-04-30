@@ -1,6 +1,5 @@
-import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader";
-import { MeshDistortMaterial, OrbitControls, Text3D } from "@react-three/drei";
-import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { OrbitControls, Text3D, FontData, useFont } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
 import {
 	Instances,
 	Instance,
@@ -11,9 +10,12 @@ import {
 } from "@react-three/drei";
 import { Suspense, useEffect, useState } from "react";
 import "../stylesheets/Timer.css";
-import { Physics, RigidBody } from "@react-three/rapier";
+
+import font from "../media/Titillium Web_Regular.json";
+
 export function Timer({ props }: any) {
 	const [timer, setTimer] = useState<Array<string>>([]);
+
 	useEffect(() => {
 		setTimer(props.timer.split(""));
 
@@ -30,48 +32,42 @@ export function Timer({ props }: any) {
 			gl={{ preserveDrawingBuffer: true }}
 		>
 			<Suspense>
-				<Physics>
-					<OrbitControls
-						maxZoom={40}
-						minZoom={30}
-						zoomSpeed={0.5}
-						enablePan={false}
-						dampingFactor={0.05}
-						minPolarAngle={Math.PI / 4}
-						maxPolarAngle={Math.PI / 4}
-					/>
-					<Center>
-						{/*<Text props={{ position: [0, -6, -24] }}>{timer}</Text>
-						<Text props={{ position: [0, -6, -16] }}>{timer}</Text>
-	<Text props={{ position: [0, -6, -8] }}>{timer}</Text>*/}
-						<Text props={{ position: [0, -5.7, 0] }}>{timer}</Text>
-						{/*<Text props={{ position: [0, -6, 8] }}>{timer}</Text>
-						<Text props={{ position: [0, -6, 16] }}>{timer}</Text>
-<Text props={{ position: [0, -6, 24] }}>{timer}</Text>*/}
-					</Center>
-					<Grid />
-				</Physics>
+				<OrbitControls
+					maxZoom={40}
+					minZoom={30}
+					zoomSpeed={0.5}
+					enablePan={false}
+					dampingFactor={0.05}
+					minPolarAngle={Math.PI / 4}
+					maxPolarAngle={Math.PI / 4}
+				/>
+				<Center>
+					<Text props={{ position: [0, -5.7, 0] }}>{timer}</Text>
+				</Center>
+				<Grid />
 			</Suspense>
 
 			<Environment resolution={32}>
 				<group rotation={[-Math.PI / 4, -0.3, 0]}>
 					<Lightformer
 						intensity={5}
+						color={"pink"}
 						rotation-y={Math.PI / 2}
-						position={[-6, -1, -1]}
-						scale={[10, 2, 1]}
+						position={[15, 10, 30]}
+						scale={[5, 2, 1]}
 					/>
 					<Lightformer
 						intensity={10}
+						color={"purple"}
 						rotation-y={-Math.PI / 2}
-						position={[10, 1, 0]}
+						position={[-15, 10, 0]}
 						scale={[20, 2, 1]}
 					/>
 					<Lightformer
 						type="ring"
 						intensity={5}
 						rotation-y={Math.PI / 2}
-						position={[-0.1, -1, -6]}
+						position={[-10, -5, -6]}
 						scale={10}
 					/>
 				</group>
@@ -111,8 +107,6 @@ const Grid = ({ number = 30, lineWidth = 0.1, height = 0.5 }) => (
 function Text({ children, props }: any) {
 	const [color, setColor] = useState([250, 50, 50]);
 
-	//const texture = useLoader(RGBELoader, "/src/media/jelly.hdr");
-
 	return (
 		<Text3D
 			onClick={() => {
@@ -122,23 +116,24 @@ function Text({ children, props }: any) {
 					setColor([250, 50, 50]);
 				}
 			}}
-			castShadow={false}
+			castShadow={true}
 			bevelEnabled={true}
 			bevelThickness={0.1}
 			bevelSize={0.1}
-			bevelSegments={50}
+			bevelSegments={20}
 			scale={5}
-			letterSpacing={0.3}
+			letterSpacing={0.4}
 			height={0.5}
-			curveSegments={50}
+			curveSegments={30}
 			rotation={[-Math.PI / 2, 0, 0]}
 			position={props.position}
-			font={"/src/media/Titillium Web_Regular.json"}
+			/*@ts-ignore*/
+			font={font as FontData}
 		>
 			{children}
 			<MeshTransmissionMaterial
-				reflectivity={0.5}
-				transmission={1.5}
+				reflectivity={0.8}
+				transmission={2}
 				thickness={0.7}
 				temporalDistortion={0.3}
 				distortionScale={0.5}

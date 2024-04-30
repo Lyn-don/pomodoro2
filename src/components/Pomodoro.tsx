@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
 import { Timer } from "./Timer";
-import { play_alarm } from "../invokes/tauri";
 import "../stylesheets/Pomodoro.css";
-interface TimerPropsI {
-	run: boolean;
-	workBreak: number;
-}
 
+import { play_alarm } from "../invokes/tauri";
 /*Converts number of seconds to minutes and seconds string => 61 seconds to 1:01*/
 function timerFormate(seconds: number): string {
 	let minute: number = (seconds - (seconds % 60)) / 60;
@@ -42,11 +38,7 @@ export function Pomodoro() {
 		if (run && startTime < endTime && timer > 0) {
 			let shiftTimeInterval = setInterval(() => {
 				setStartTime(startTime + 1000);
-				setTimer(timer - 1);
-				console.log(timer - 1);
-				if (timer - 1 == 0) {
-					play_alarm();
-				}
+				setTimer((timer) => timer - 1);
 			}, 1000);
 
 			return () => {
@@ -54,7 +46,11 @@ export function Pomodoro() {
 				clearInterval(shiftTimeInterval);
 			};
 		}
+
+		if (startTime && startTime == endTime) play_alarm();
 	}, [run, timer]);
+
+	console.log(endTime, startTime, timer, run);
 
 	//reset if switch from break to work or vice versa
 	useEffect(() => {
@@ -66,6 +62,7 @@ export function Pomodoro() {
 
 		setTimer(workBreak);
 	}, [workBreak]);
+
 	return (
 		<div className="div--pomodoro">
 			<div className="div--top-controls">
@@ -92,7 +89,9 @@ export function Pomodoro() {
 					WORK
 				</button>
 			</div>
-
+			{/*<h1 style={{ fontSize: 300, padding: 0, margin: 0 }}>
+				{timerFormate(timer)}
+				</h1>*/}
 			<div className="div--bottom-controls">
 				<button
 					className="button--small"
@@ -136,6 +135,7 @@ export function Pomodoro() {
 			<div className="div--timer">
 				<Timer props={{ timer: timerFormate(timer) }} />
 			</div>
+			{/**/}
 		</div>
 	);
 }
